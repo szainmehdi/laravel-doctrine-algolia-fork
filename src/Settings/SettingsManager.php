@@ -10,10 +10,7 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 final class SettingsManager
 {
-    /**
-     * @var SearchClient
-     */
-    private $algolia;
+    private SearchClient $algolia;
 
     /**
      * @var array<string, array|int|string>
@@ -26,7 +23,7 @@ final class SettingsManager
     public function __construct(SearchClient $algolia, array $config)
     {
         $this->algolia = $algolia;
-        $this->config  = $config;
+        $this->config = $config;
     }
 
     /**
@@ -37,46 +34,21 @@ final class SettingsManager
     public function backup(array $params)
     {
         $indices = $this->getIndexNames($params['indices']);
-        $fs      = new Filesystem();
-        $output  = [];
+        $fs = new Filesystem();
+        $output = [];
 
         if (!$fs->exists($this->config['settingsDirectory'])) {
             $fs->mkdir($this->config['settingsDirectory']);
         }
 
         foreach ($indices as $indexName) {
-            $index    = $this->algolia->initIndex($indexName);
+            $index = $this->algolia->initIndex($indexName);
             $settings = $index->getSettings();
             $filename = $this->getFileName($indexName, 'settings');
 
             $fs->dumpFile($filename, json_encode($settings, JSON_PRETTY_PRINT));
 
             $output[] = "Saved settings for <info>$indexName</info> in $filename";
-        }
-
-        return $output;
-    }
-
-    /**
-     * @param array<string, array|int|string> $params
-     *
-     * @return array<int, string>
-     */
-    public function push(array $params)
-    {
-        $indices = $this->getIndexNames($params['indices']);
-        $output  = [];
-
-        foreach ($indices as $indexName) {
-            $filename = $this->getFileName($indexName, 'settings');
-
-            if (is_readable($filename)) {
-                $index    = $this->algolia->initIndex($indexName);
-                $settings = json_decode(file_get_contents($filename), true);
-                $index->setSettings($settings);
-
-                $output[] = "Pushed settings for <info>$indexName</info>";
-            }
         }
 
         return $output;
@@ -121,5 +93,30 @@ final class SettingsManager
     private function removePrefixFromIndexName($indexName)
     {
         return preg_replace('/^' . preg_quote($this->config['prefix'], '/') . '/', '', $indexName);
+    }
+
+    /**
+     * @param array<string, array|int|string> $params
+     *
+     * @return array<int, string>
+     */
+    public function push(array $params)
+    {
+        $indices = $this->getIndexNames($params['indices']);
+        $output = [];
+
+        foreach ($indices as $indexName) {
+            $filename = $this->getFileName($indexName, 'settings');
+
+            if (is_readable($filename)) {
+                $index = $this->algolia->initIndex($indexName);
+                $settings = json_decode(file_get_contents($filename), true);
+                $index->setSettings($settings);
+
+                $output[] = "Pushed settings for <info>$indexName</info>";
+            }
+        }
+
+        return $output;
     }
 }

@@ -4,7 +4,7 @@ namespace Zain\LaravelDoctrine\Algolia;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 use JMS\Serializer\ArrayTransformerInterface;
-use Symfony\Component\Config\Definition\Exception\Exception;
+use Zain\LaravelDoctrine\Algolia\Exception\ConfigurationException as Exception;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
