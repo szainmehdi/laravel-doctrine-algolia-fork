@@ -3,11 +3,11 @@
 namespace Zain\LaravelDoctrine\Algolia\Services;
 
 use Algolia\AlgoliaSearch\RequestOptions\RequestOptions;
-use Algolia\SearchBundle\Engine;
-use Algolia\SearchBundle\Entity\Aggregator;
-use Algolia\SearchBundle\Responses\SearchServiceResponse;
-use Algolia\SearchBundle\SearchableEntity;
-use Algolia\SearchBundle\SearchService;
+use Zain\LaravelDoctrine\Algolia\Engine;
+use Zain\LaravelDoctrine\Algolia\Entity\Aggregator;
+use Zain\LaravelDoctrine\Algolia\Responses\SearchServiceResponse;
+use Zain\LaravelDoctrine\Algolia\SearchableEntity;
+use Zain\LaravelDoctrine\Algolia\SearchService;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Util\ClassUtils;
 use Symfony\Component\Config\Definition\Exception\Exception;
