@@ -10,7 +10,7 @@ class EngineTest extends BaseTest
 {
     protected $engine;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

@@ -16,7 +16,7 @@ class SearchServiceTest extends BaseTest
     protected $searchService;
     protected $entityManager;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->searchService  = $this->get('search.service');

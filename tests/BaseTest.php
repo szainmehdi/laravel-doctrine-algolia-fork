@@ -11,7 +11,7 @@ use Zain\LaravelDoctrine\Algolia\TestApp\Entity\Post;
 
 class BaseTest extends KernelTestCase
 {
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         /*
          * Older version of PHPUnit (<6.0) load
@@ -25,7 +25,7 @@ class BaseTest extends KernelTestCase
         }
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->bootKernel();
     }

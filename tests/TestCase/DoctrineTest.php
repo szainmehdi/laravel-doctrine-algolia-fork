@@ -14,7 +14,7 @@ class DoctrineTest extends BaseTest
     /** @var \Zain\LaravelDoctrine\Algolia\Services\AlgoliaSearchService */
     protected $searchService;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

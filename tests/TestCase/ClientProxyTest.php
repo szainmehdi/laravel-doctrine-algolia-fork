@@ -9,7 +9,7 @@ class ClientProxyTest extends BaseTest
 {
     private static $values = [];
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         // Unset env variables to make sure Algolia
         // Credentials are only required when the
@@ -30,7 +30,7 @@ class ClientProxyTest extends BaseTest
         unset($_SERVER['ALGOLIA_API_KEY']);
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         putenv('ALGOLIA_APP_ID=' . self::$values['env_id']);
         putenv('ALGOLIA_API_KEY=' . self::$values['env_key']);

@@ -17,7 +17,7 @@ class SettingsTest extends BaseTest
     private $configIndexes;
     private $indexName;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

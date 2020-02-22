@@ -21,7 +21,7 @@ class CommandsTest extends BaseTest
     protected $platform;
     protected $index;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->searchService = $this->get('search.service');
