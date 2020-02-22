@@ -12,68 +12,67 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
  */
 final class SearchableEntity
 {
-    /**
-     * @var string
-     */
-    private $indexName;
+    private string $indexName;
+    private object $entity;
+    private ClassMetadata $entityMetadata;
+    private bool $useSerializerGroups;
 
-    /**
-     * @var object
-     */
-    private $entity;
+    /** @var mixed */
+    private $normalizer;
 
-    /**
-     * @var ClassMetadata
-     */
-    private $entityMetadata;
-
-    /**
-     * @var bool
-     */
-    private $useSerializerGroups;
-
-    /**
-     * @var int|string
-     */
+    /** @var int|string */
     private $id;
 
     /**
-     * @var object
-     */
-    private $normalizer;
-
-    /**
-     * @param string                               $indexName
-     * @param object                               $entity
-     * @param ClassMetadata                        $entityMetadata
-     * @param object                               $normalizer
      * @param array<string, int|string|array|bool> $extra
+     * @param mixed $normalizer
      */
-    public function __construct($indexName, $entity, $entityMetadata, $normalizer, array $extra = [])
-    {
-        $this->indexName           = $indexName;
-        $this->entity              = $entity;
-        $this->entityMetadata      = $entityMetadata;
-        $this->normalizer          = $normalizer;
+    public function __construct(
+        string $indexName,
+        object $entity,
+        ClassMetadata $entityMetadata,
+        $normalizer,
+        array $extra = []
+    ) {
+        $this->indexName = $indexName;
+        $this->entity = $entity;
+        $this->entityMetadata = $entityMetadata;
+        $this->normalizer = $normalizer;
         $this->useSerializerGroups = isset($extra['useSerializerGroup']) && $extra['useSerializerGroup'];
 
         $this->setId();
     }
 
-    /**
-     * @return string
-     */
-    public function getIndexName()
+    private function setId(): void
+    {
+        $ids = $this->entityMetadata->getIdentifierValues($this->entity);
+
+        if (count($ids) === 0) {
+            throw new Exception('Entity has no primary key');
+        }
+
+        if (count($ids) == 1) {
+            $this->id = reset($ids);
+        } else {
+            $objectID = '';
+            foreach ($ids as $key => $value) {
+                $objectID .= $key . '-' . $value . '__';
+            }
+
+            $this->id = rtrim($objectID, '_');
+        }
+    }
+
+    public function getIndexName(): string
     {
         return $this->indexName;
     }
 
     /**
      * @return array<string, int|string|array>
-     *
      * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
      */
-    public function getSearchableArray()
+    public function getSearchableArray(): array
     {
         $context = [
             'fieldsMapping' => $this->entityMetadata->fieldMappings,
@@ -87,29 +86,8 @@ final class SearchableEntity
             return $this->normalizer->normalize($this->entity, Searchable::NORMALIZATION_FORMAT, $context);
         } elseif ($this->normalizer instanceof ArrayTransformerInterface) {
             return $this->normalizer->toArray($this->entity);
-        }
-    }
-
-    /**
-     * @return void
-     */
-    private function setId()
-    {
-        $ids = $this->entityMetadata->getIdentifierValues($this->entity);
-
-        if (count($ids) === 0) {
-            throw new Exception('Entity has no primary key');
-        }
-
-        if (1 == count($ids)) {
-            $this->id = reset($ids);
         } else {
-            $objectID = '';
-            foreach ($ids as $key => $value) {
-                $objectID .= $key . '-' . $value . '__';
-            }
-
-            $this->id = rtrim($objectID, '_');
+            return [];
         }
     }
 

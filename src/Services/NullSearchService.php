@@ -3,9 +3,10 @@
 namespace Zain\LaravelDoctrine\Algolia\Services;
 
 use Algolia\AlgoliaSearch\RequestOptions\RequestOptions;
+use Algolia\AlgoliaSearch\Response\AbstractResponse as Response;
 use Algolia\AlgoliaSearch\Response\NullResponse;
-use Zain\LaravelDoctrine\Algolia\SearchService;
 use Doctrine\Common\Persistence\ObjectManager;
+use Zain\LaravelDoctrine\Algolia\SearchService;
 
 /**
  * This class aims to be used in dev or testing environments. It may
@@ -18,7 +19,7 @@ class NullSearchService implements SearchService
      *
      * @return bool
      */
-    public function isSearchable($className)
+    public function isSearchable($className): bool
     {
         return false;
     }
@@ -26,7 +27,7 @@ class NullSearchService implements SearchService
     /**
      * @return array<int, string>
      */
-    public function getSearchables()
+    public function getSearchables(): array
     {
         return [];
     }
@@ -34,7 +35,7 @@ class NullSearchService implements SearchService
     /**
      * @return array<string, array|int|string>
      */
-    public function getConfiguration()
+    public function getConfiguration(): array
     {
         return [
             'batchSize' => 200,
@@ -46,7 +47,7 @@ class NullSearchService implements SearchService
      *
      * @return string
      */
-    public function searchableAs($className)
+    public function searchableAs(string $className): string
     {
         return $className;
     }
@@ -57,7 +58,7 @@ class NullSearchService implements SearchService
      *
      * @return \Algolia\AlgoliaSearch\Response\AbstractResponse
      */
-    public function index(ObjectManager $objectManager, $searchables, $requestOptions = [])
+    public function index(ObjectManager $objectManager, $searchables, $requestOptions = []): Response
     {
         return new NullResponse();
     }
@@ -68,7 +69,7 @@ class NullSearchService implements SearchService
      *
      * @return \Algolia\AlgoliaSearch\Response\AbstractResponse
      */
-    public function remove(ObjectManager $objectManager, $searchables, $requestOptions = [])
+    public function remove(ObjectManager $objectManager, $searchables, $requestOptions = []): Response
     {
         return new NullResponse();
     }
@@ -79,7 +80,7 @@ class NullSearchService implements SearchService
      *
      * @return \Algolia\AlgoliaSearch\Response\AbstractResponse
      */
-    public function clear($className, $requestOptions = [])
+    public function clear(string $className, $requestOptions = []): Response
     {
         return new NullResponse();
     }
@@ -90,7 +91,7 @@ class NullSearchService implements SearchService
      *
      * @return \Algolia\AlgoliaSearch\Response\AbstractResponse
      */
-    public function delete($className, $requestOptions = [])
+    public function delete(string $className, $requestOptions = []): Response
     {
         return new NullResponse();
     }
@@ -120,7 +121,7 @@ class NullSearchService implements SearchService
      *
      * @throws \Algolia\AlgoliaSearch\Exceptions\AlgoliaException
      */
-    public function rawSearch($className, $query = '', $requestOptions = [])
+    public function rawSearch($className, $query = '', $requestOptions = []): array
     {
         return [
             'hits'             => [],
@@ -144,7 +145,7 @@ class NullSearchService implements SearchService
      *
      * @throws \Algolia\AlgoliaSearch\Exceptions\AlgoliaException
      */
-    public function count($className, $query = '', $requestOptions = [])
+    public function count($className, $query = '', $requestOptions = []): int
     {
         return 0;
     }

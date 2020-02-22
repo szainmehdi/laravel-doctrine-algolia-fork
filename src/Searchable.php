@@ -4,6 +4,6 @@ namespace Zain\LaravelDoctrine\Algolia;
 
 final class Searchable
 {
-    const NORMALIZATION_FORMAT = 'searchableArray';
-    const NORMALIZATION_GROUP  = 'searchable';
+    public const NORMALIZATION_FORMAT = 'searchableArray';
+    public const NORMALIZATION_GROUP  = 'searchable';
 }
