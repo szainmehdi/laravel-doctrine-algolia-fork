@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit colors="true" bootstrap="vendor/autoload.php" convertDeprecationsToExceptions="false">
     <php>
-        <env name="KERNEL_CLASS" value="Algolia\SearchBundle\Kernel" />
+        <env name="KERNEL_CLASS" value="Zain\LaravelDoctrine\Algolia\Kernel" />
         <env name="APP_ENV" value="test" />
         <env name="APP_DEBUG" value="false" />
         <env name="ALGOLIA_PREFIX" value="sf_phpunit_" />

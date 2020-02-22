@@ -1,8 +1,8 @@
 <?php
 
-namespace Algolia\SearchBundle\Document;
+namespace Zain\LaravelDoctrine\Algolia\Document;
 
-use Algolia\SearchBundle\Model\Aggregator as BaseAggregator;
+use Zain\LaravelDoctrine\Algolia\Model\Aggregator as BaseAggregator;
 
 abstract class Aggregator extends BaseAggregator
 {

@@ -6,13 +6,13 @@
 
     <services>
 
-        <prototype namespace="Algolia\SearchBundle\Command\" resource="../../Command" autowire="true" autoconfigure="true" />
+        <prototype namespace="Zain\LaravelDoctrine\Algolia\Command\" resource="../../Command" autowire="true" autoconfigure="true" />
 
-        <service id="Algolia\SearchBundle\Command\SearchImportCommand" autowire="true" autoconfigure="true">
+        <service id="Zain\LaravelDoctrine\Algolia\Command\SearchImportCommand" autowire="true" autoconfigure="true">
             <argument key="$searchServiceForAtomicReindex" type="service" id="search.service_for_atomic_reindex" />
         </service>
 
-        <service id="search.search_indexer_subscriber" class="Algolia\SearchBundle\EventListener\SearchIndexerSubscriber" public="true">
+        <service id="search.search_indexer_subscriber" class="Zain\LaravelDoctrine\Algolia\EventListener\SearchIndexerSubscriber" public="true">
             <argument type="service" id="search.service" />
             <argument type="collection" /> <!-- doctrine subscribed events -->
             <tag name="doctrine.event_subscriber" />
@@ -27,8 +27,8 @@
 
         <service id="Algolia\AlgoliaSearch\SearchClient" alias="search.client" />
 
-        <service id="Algolia\SearchBundle\SearchService" alias="search.service"/>
-        <service id="Algolia\SearchBundle\Settings\SettingsManager" alias="search.settings_manager"/>
+        <service id="Zain\LaravelDoctrine\Algolia\SearchService" alias="search.service"/>
+        <service id="Zain\LaravelDoctrine\Algolia\Settings\SettingsManager" alias="search.settings_manager"/>
 
         <!-- CustomNormalizer is not registered by framework-bundle -->
         <service id="custom_normalizer" class="Symfony\Component\Serializer\Normalizer\CustomNormalizer" public="false">

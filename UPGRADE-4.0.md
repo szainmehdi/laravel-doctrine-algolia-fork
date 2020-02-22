@@ -74,7 +74,7 @@ Previously, to get started:
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Algolia\SearchBundle\IndexManagerInterface;
+use Zain\LaravelDoctrine\Algolia\IndexManagerInterface;
 
 class ExampleController extends Controller
 {
@@ -93,7 +93,7 @@ Now, in `4.0.0` you should update your code to:
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Algolia\SearchBundle\SearchService;
+use Zain\LaravelDoctrine\Algolia\SearchService;
 
 class ExampleController extends Controller
 {
@@ -262,30 +262,30 @@ $result = $this->searchService->search(
     </thead>
     <tbody>
       <tr>
-        <td><code>Algolia\SearchBundle\Engine\AlgoliaEngine</code></td>
+        <td><code>Zain\LaravelDoctrine\Algolia\Engine\AlgoliaEngine</code></td>
         <td>Removed</td>
         <td>/</td>
       </tr>
       <tr>
-        <td><code>Algolia\SearchBundle\IndexManager</code></td>
+        <td><code>Zain\LaravelDoctrine\Algolia\IndexManager</code></td>
         <td>Renamed</td>
-        <td><code>Algolia\SearchBundle\Services\AlgoliaSearchService</code></td>
+        <td><code>Zain\LaravelDoctrine\Algolia\Services\AlgoliaSearchService</code></td>
       </tr>
       <tr>
-        <td><code>Algolia\SearchBundle\IndexManagerInterface</code></td>
+        <td><code>Zain\LaravelDoctrine\Algolia\IndexManagerInterface</code></td>
         <td>Renamed</td>
-        <td><code>Algolia\SearchBundle\SearchService</code></td>
+        <td><code>Zain\LaravelDoctrine\Algolia\SearchService</code></td>
       </tr>
       <tr>
-        <td><code>Algolia\SearchBundle\Engine\NullEngine</code></td>
+        <td><code>Zain\LaravelDoctrine\Algolia\Engine\NullEngine</code></td>
         <td>Changed</td>
-        <td><code>Algolia\SearchBundle\Services\NullSearchService<sup>*</sup></code></td>
+        <td><code>Zain\LaravelDoctrine\Algolia\Services\NullSearchService<sup>*</sup></code></td>
       </tr>
     </tbody>
   </table>
 </div>
 
-<sup>*</sup>For testing purposes use <code>Algolia\SearchBundle\SearchService</code> by mocking it or extending it and overriding the `search.service` in your test config (see https://symfony.com/doc/current/configuration.html#configuration-environments). The <code>Algolia\SearchBundle\Services\NullSearchService</code> class is here as an example.
+<sup>*</sup>For testing purposes use <code>Zain\LaravelDoctrine\Algolia\SearchService</code> by mocking it or extending it and overriding the `search.service` in your test config (see https://symfony.com/doc/current/configuration.html#configuration-environments). The <code>Zain\LaravelDoctrine\Algolia\Services\NullSearchService</code> class is here as an example.
 
 
 ## List of classes that became internal
@@ -293,16 +293,16 @@ $result = $this->searchService->search(
 The following classes are now internal and may not respect semantic versioning. Those classes are not meant to be 
 used directly and may be up to changes in minor versions.
 
-* `Algolia\SearchBundle\Command\SearchClearCommand`
-* `Algolia\SearchBundle\Command\SearchImportCommand`
-* `Algolia\SearchBundle\Command\SearchSettingsBackupCommand`
-* `Algolia\SearchBundle\Command\SearchSettingsCommand`
-* `Algolia\SearchBundle\Command\SearchSettingsPushCommand`
-* `Algolia\SearchBundle\DependencyInjection\AlgoliaSearchExtension`
-* `Algolia\SearchBundle\DependencyInjection\Configuration`
-* `Algolia\SearchBundle\EventListener\SearchIndexerSubscriber`
-* `Algolia\SearchBundle\SearchableEntity`
-* `Algolia\SearchBundle\SettingsManager`
+* `Zain\LaravelDoctrine\Algolia\Command\SearchClearCommand`
+* `Zain\LaravelDoctrine\Algolia\Command\SearchImportCommand`
+* `Zain\LaravelDoctrine\Algolia\Command\SearchSettingsBackupCommand`
+* `Zain\LaravelDoctrine\Algolia\Command\SearchSettingsCommand`
+* `Zain\LaravelDoctrine\Algolia\Command\SearchSettingsPushCommand`
+* `Zain\LaravelDoctrine\Algolia\DependencyInjection\AlgoliaSearchExtension`
+* `Zain\LaravelDoctrine\Algolia\DependencyInjection\Configuration`
+* `Zain\LaravelDoctrine\Algolia\EventListener\SearchIndexerSubscriber`
+* `Zain\LaravelDoctrine\Algolia\SearchableEntity`
+* `Zain\LaravelDoctrine\Algolia\SettingsManager`
 
 
 ## List of deleted interfaces and final classes you should use instead
@@ -317,12 +317,12 @@ used directly and may be up to changes in minor versions.
     </thead>
     <tbody>
       <tr>
-        <td><code>Algolia\SearchBundle\Settings\SettingsManagerInterface</code></td>
+        <td><code>Zain\LaravelDoctrine\Algolia\Settings\SettingsManagerInterface</code></td>
         <td>Removed</td>
-        <td><code>Algolia\SearchBundle\Settings\SettingsManager</code></td>
+        <td><code>Zain\LaravelDoctrine\Algolia\Settings\SettingsManager</code></td>
       </tr>
       <tr>
-        <td><code>Algolia\SearchBundle\Engine\EngineInterface</code></td>
+        <td><code>Zain\LaravelDoctrine\Algolia\Engine\EngineInterface</code></td>
         <td>Removed</td>
         <td>/</td>
       </tr>

@@ -1,11 +1,11 @@
 <?php
 
-namespace Algolia\SearchBundle\TestCase;
+namespace Zain\LaravelDoctrine\Algolia\TestCase;
 
 use Algolia\AlgoliaSearch\SearchClient;
-use Algolia\SearchBundle\BaseTest;
-use Algolia\SearchBundle\Settings\SettingsManager;
-use Algolia\SearchBundle\TestApp\Entity\Post;
+use Zain\LaravelDoctrine\Algolia\BaseTest;
+use Zain\LaravelDoctrine\Algolia\Settings\SettingsManager;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\Post;
 
 class SettingsTest extends BaseTest
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace Algolia\SearchBundle\TestCase;
+namespace Zain\LaravelDoctrine\Algolia\TestCase;
 
-use Algolia\SearchBundle\BaseTest;
-use Algolia\SearchBundle\Exception\EntityNotFoundInObjectID;
-use Algolia\SearchBundle\Exception\InvalidEntityForAggregator;
-use Algolia\SearchBundle\TestApp\Entity\ContentAggregator;
-use Algolia\SearchBundle\TestApp\Entity\EmptyAggregator;
-use Algolia\SearchBundle\TestApp\Entity\Post;
+use Zain\LaravelDoctrine\Algolia\BaseTest;
+use Zain\LaravelDoctrine\Algolia\Exception\EntityNotFoundInObjectID;
+use Zain\LaravelDoctrine\Algolia\Exception\InvalidEntityForAggregator;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\ContentAggregator;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\EmptyAggregator;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\Post;
 
 class AggregatorTest extends BaseTest
 {

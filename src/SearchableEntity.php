@@ -1,6 +1,6 @@
 <?php
 
-namespace Algolia\SearchBundle;
+namespace Zain\LaravelDoctrine\Algolia;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 use JMS\Serializer\ArrayTransformerInterface;

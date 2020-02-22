@@ -1,11 +1,11 @@
 <?php
 
-namespace Algolia\SearchBundle\Command;
+namespace Zain\LaravelDoctrine\Algolia\Command;
 
-use Algolia\SearchBundle\SearchService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Zain\LaravelDoctrine\Algolia\SearchService;
 
 /**
  * @internal

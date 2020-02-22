@@ -1,10 +1,7 @@
 <?php
 
-namespace Algolia\SearchBundle\DependencyInjection;
+namespace Zain\LaravelDoctrine\Algolia\DependencyInjection;
 
-use Algolia\SearchBundle\Engine;
-use Algolia\SearchBundle\Services\AlgoliaSearchService;
-use Algolia\SearchBundle\Settings\SettingsManager;
 use Exception;
 use InvalidArgumentException;
 use Symfony\Component\Config\FileLocator;
@@ -14,6 +11,9 @@ use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\HttpKernel\Kernel;
+use Zain\LaravelDoctrine\Algolia\Engine;
+use Zain\LaravelDoctrine\Algolia\Services\AlgoliaSearchService;
+use Zain\LaravelDoctrine\Algolia\Settings\SettingsManager;
 
 /**
  * This is the class that loads and manages your bundle configuration.

@@ -5,16 +5,16 @@ algolia_search:
     settingsDirectory: '/tests/cache/settings'
     indices:
         - name: posts
-          class: 'Algolia\SearchBundle\TestApp\Entity\Post'
+          class: 'Zain\LaravelDoctrine\Algolia\TestApp\Entity\Post'
           enable_serializer_groups: true
         - name: comments
-          class: 'Algolia\SearchBundle\TestApp\Entity\Comment'
+          class: 'Zain\LaravelDoctrine\Algolia\TestApp\Entity\Comment'
         - name: contents
-          class: 'Algolia\SearchBundle\TestApp\Entity\ContentAggregator'
+          class: 'Zain\LaravelDoctrine\Algolia\TestApp\Entity\ContentAggregator'
           index_if: isVisible
         - name: tags
-          class: 'Algolia\SearchBundle\TestApp\Entity\Tag'
+          class: 'Zain\LaravelDoctrine\Algolia\TestApp\Entity\Tag'
           index_if: isPublic
         - name: links
-          class: 'Algolia\SearchBundle\TestApp\Entity\Link'
+          class: 'Zain\LaravelDoctrine\Algolia\TestApp\Entity\Link'
           index_if: isSponsored

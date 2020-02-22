@@ -1,10 +1,10 @@
 <?php
 
-namespace Algolia\SearchBundle\TestCase;
+namespace Zain\LaravelDoctrine\Algolia\TestCase;
 
 use Algolia\AlgoliaSearch\Response\IndexingResponse;
-use Algolia\SearchBundle\BaseTest;
-use Algolia\SearchBundle\Engine;
+use Zain\LaravelDoctrine\Algolia\BaseTest;
+use Zain\LaravelDoctrine\Algolia\Engine;
 
 class EngineTest extends BaseTest
 {

@@ -16,7 +16,7 @@ doctrine:
                 is_bundle: false
                 type: annotation
                 dir: '%kernel.project_dir%/tests/TestApp/Entity'
-                prefix: 'Algolia\SearchBundle\TestApp\Entity'
+                prefix: 'Zain\LaravelDoctrine\Algolia\TestApp\Entity'
                 alias: App
 
 jms_serializer:

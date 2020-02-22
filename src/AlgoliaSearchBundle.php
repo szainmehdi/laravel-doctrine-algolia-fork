@@ -1,6 +1,6 @@
 <?php
 
-namespace Algolia\SearchBundle;
+namespace Zain\LaravelDoctrine\Algolia;
 
 use Algolia\AlgoliaSearch\Support\UserAgent;
 use Symfony\Component\HttpKernel\Bundle\Bundle;

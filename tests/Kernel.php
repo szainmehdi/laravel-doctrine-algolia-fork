@@ -1,6 +1,6 @@
 <?php
 
-namespace Algolia\SearchBundle;
+namespace Zain\LaravelDoctrine\Algolia;
 
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;

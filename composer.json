@@ -1,8 +1,13 @@
 {
-    "name": "algolia/search-bundle",
-    "type": "symfony-bundle",
+    "name": "zain/laravel-doctrine-algolia",
+    "type": "library",
+    "description": "Algolia integration with Laravel & Doctrine",
     "license": "MIT",
     "authors": [
+        {
+            "name": "Zain Mehdi",
+            "email": "szainmehdi@gmail.com"
+        },
         {
             "name": "Algolia",
             "email": "support@algolia.com"
@@ -10,7 +15,7 @@
     ],
     "prefer-stable": true,
     "require": {
-        "php": "^5.6 || ^7.0",
+        "php": "^7.4",
         "algolia/algoliasearch-client-php": "^2.5",
         "doctrine/common": "^2.5",
         "symfony/filesystem": "^3.4 || ^4.0 || ^5.0",
@@ -19,7 +24,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Algolia\\SearchBundle\\": "src/"
+            "Zain\\LaravelDoctrine\\Algolia\\": "src/"
         }
     },
     "conflict": {
@@ -27,7 +32,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Algolia\\SearchBundle\\": "tests/"
+            "Zain\\LaravelDoctrine\\Algolia\\": "tests/"
         }
     },
     "require-dev": {

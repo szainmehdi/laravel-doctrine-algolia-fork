@@ -1,11 +1,11 @@
 <?php
 
-namespace Algolia\SearchBundle\TestApp\Entity;
+namespace Zain\LaravelDoctrine\Algolia\TestApp\Entity;
 
-use Algolia\SearchBundle\Searchable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Zain\LaravelDoctrine\Algolia\Searchable;
 
 /**
  * @ORM\Entity

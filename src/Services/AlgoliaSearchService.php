@@ -1,6 +1,6 @@
 <?php
 
-namespace Algolia\SearchBundle\Services;
+namespace Zain\LaravelDoctrine\Algolia\Services;
 
 use Algolia\AlgoliaSearch\RequestOptions\RequestOptions;
 use Algolia\SearchBundle\Engine;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Algolia\SearchBundle\TestApp\Entity;
+namespace Zain\LaravelDoctrine\Algolia\TestApp\Entity;
 
-use Algolia\SearchBundle\Entity\Aggregator;
 use Doctrine\ORM\Mapping as ORM;
+use Zain\LaravelDoctrine\Algolia\Entity\Aggregator;
 
 /**
  * @ORM\Entity

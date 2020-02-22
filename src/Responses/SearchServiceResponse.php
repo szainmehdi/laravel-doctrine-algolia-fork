@@ -1,6 +1,6 @@
 <?php
 
-namespace Algolia\SearchBundle\Responses;
+namespace Zain\LaravelDoctrine\Algolia\Responses;
 
 use Algolia\AlgoliaSearch\Response\AbstractResponse;
 

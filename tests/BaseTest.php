@@ -1,13 +1,13 @@
 <?php
 
-namespace Algolia\SearchBundle;
+namespace Zain\LaravelDoctrine\Algolia;
 
-use Algolia\SearchBundle\TestApp\Entity\Comment;
-use Algolia\SearchBundle\TestApp\Entity\Image;
-use Algolia\SearchBundle\TestApp\Entity\Post;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\Comment;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\Image;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\Post;
 
 class BaseTest extends KernelTestCase
 {

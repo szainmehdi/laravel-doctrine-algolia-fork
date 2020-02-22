@@ -27,7 +27,7 @@ new Algolia\AlgoliaSearchBundle\AlgoliaAlgoliaSearchBundle(),
 
 After:
 ```php
-new Algolia\SearchBundle\AlgoliaSearchBundle(),
+new Zain\LaravelDoctrine\Algolia\AlgoliaSearchBundle(),
 ```
 
 Config

@@ -1,15 +1,15 @@
 <?php
 
-namespace Algolia\SearchBundle\Command;
+namespace Zain\LaravelDoctrine\Algolia\Command;
 
 use Algolia\AlgoliaSearch\SearchClient;
-use Algolia\SearchBundle\Entity\Aggregator;
-use Algolia\SearchBundle\SearchService;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Zain\LaravelDoctrine\Algolia\Entity\Aggregator;
+use Zain\LaravelDoctrine\Algolia\SearchService;
 
 /**
  * @internal

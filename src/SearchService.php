@@ -1,6 +1,6 @@
 <?php
 
-namespace Algolia\SearchBundle;
+namespace Zain\LaravelDoctrine\Algolia;
 
 use Algolia\AlgoliaSearch\RequestOptions\RequestOptions;
 use Doctrine\Common\Persistence\ObjectManager;

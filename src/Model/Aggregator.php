@@ -1,11 +1,11 @@
 <?php
 
-namespace Algolia\SearchBundle\Model;
+namespace Zain\LaravelDoctrine\Algolia\Model;
 
-use Algolia\SearchBundle\Exception\EntityNotFoundInObjectID;
-use Algolia\SearchBundle\Exception\InvalidEntityForAggregator;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Zain\LaravelDoctrine\Algolia\Exception\EntityNotFoundInObjectID;
+use Zain\LaravelDoctrine\Algolia\Exception\InvalidEntityForAggregator;
 
 abstract class Aggregator implements NormalizableInterface
 {

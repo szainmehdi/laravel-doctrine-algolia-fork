@@ -1,6 +1,6 @@
 <?php
 
-namespace Algolia\SearchBundle;
+namespace Zain\LaravelDoctrine\Algolia;
 
 final class Searchable
 {

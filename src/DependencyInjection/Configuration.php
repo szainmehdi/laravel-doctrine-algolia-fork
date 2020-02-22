@@ -1,6 +1,6 @@
 <?php
 
-namespace Algolia\SearchBundle\DependencyInjection;
+namespace Zain\LaravelDoctrine\Algolia\DependencyInjection;
 
 use function method_exists;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;

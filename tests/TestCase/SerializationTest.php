@@ -1,16 +1,16 @@
 <?php
 
-namespace Algolia\SearchBundle\TestCase;
+namespace Zain\LaravelDoctrine\Algolia\TestCase;
 
-use Algolia\SearchBundle\BaseTest;
-use Algolia\SearchBundle\Normalizer\CommentNormalizer;
-use Algolia\SearchBundle\Searchable;
-use Algolia\SearchBundle\SearchableEntity;
-use Algolia\SearchBundle\TestApp\Entity\Comment;
-use Algolia\SearchBundle\TestApp\Entity\Post;
-use Algolia\SearchBundle\TestApp\Entity\Tag;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Zain\LaravelDoctrine\Algolia\BaseTest;
+use Zain\LaravelDoctrine\Algolia\Normalizer\CommentNormalizer;
+use Zain\LaravelDoctrine\Algolia\Searchable;
+use Zain\LaravelDoctrine\Algolia\SearchableEntity;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\Comment;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\Post;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\Tag;
 
 class SerializationTest extends BaseTest
 {

@@ -1,6 +1,6 @@
 services:
     search.search_indexer_subscriber:
-        class: Algolia\SearchBundle\EventListener\SearchIndexerSubscriber
+        class: Zain\LaravelDoctrine\Algolia\EventListener\SearchIndexerSubscriber
         public: true
         arguments:
             - '@search.service'
@@ -13,6 +13,6 @@ services:
             - name: "doctrine_mongodb.odm.event_subscriber"
 
     serializer.commentnormalizer:
-        class: Algolia\SearchBundle\Normalizer\CommentNormalizer
+        class: Zain\LaravelDoctrine\Algolia\Normalizer\CommentNormalizer
         tags: [serializer.normalizer]
 #        priority: -88

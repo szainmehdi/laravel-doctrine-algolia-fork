@@ -1,6 +1,6 @@
 <?php
 
-namespace Algolia\SearchBundle\Command;
+namespace Zain\LaravelDoctrine\Algolia\Command;
 
 use Algolia\AlgoliaSearch\Response\IndexingResponse;
 use Symfony\Component\Console\Input\InputArgument;

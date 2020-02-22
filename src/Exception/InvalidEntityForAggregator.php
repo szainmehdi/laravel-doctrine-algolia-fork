@@ -1,6 +1,6 @@
 <?php
 
-namespace Algolia\SearchBundle\Exception;
+namespace Zain\LaravelDoctrine\Algolia\Exception;
 
 use LogicException;
 

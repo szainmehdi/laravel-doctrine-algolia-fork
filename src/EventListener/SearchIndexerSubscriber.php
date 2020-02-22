@@ -1,10 +1,10 @@
 <?php
 
-namespace Algolia\SearchBundle\EventListener;
+namespace Zain\LaravelDoctrine\Algolia\EventListener;
 
-use Algolia\SearchBundle\SearchService;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Zain\LaravelDoctrine\Algolia\SearchService;
 
 /**
  * @internal

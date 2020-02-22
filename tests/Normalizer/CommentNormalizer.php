@@ -1,9 +1,9 @@
 <?php
 
-namespace Algolia\SearchBundle\Normalizer;
+namespace Zain\LaravelDoctrine\Algolia\Normalizer;
 
-use Algolia\SearchBundle\TestApp\Entity\Comment;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\Comment;
 
 class CommentNormalizer implements NormalizerInterface
 {

@@ -1,17 +1,17 @@
 <?php
 
-namespace Algolia\SearchBundle\TestCase;
+namespace Zain\LaravelDoctrine\Algolia\TestCase;
 
-use Algolia\SearchBundle\BaseTest;
-use Algolia\SearchBundle\TestApp\Entity\Comment;
-use Algolia\SearchBundle\TestApp\Entity\ContentAggregator;
-use Algolia\SearchBundle\TestApp\Entity\Post;
-use Algolia\SearchBundle\TestApp\Entity\Tag;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Zain\LaravelDoctrine\Algolia\BaseTest;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\Comment;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\ContentAggregator;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\Post;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\Tag;
 
 class DoctrineTest extends BaseTest
 {
-    /** @var \Algolia\SearchBundle\Services\AlgoliaSearchService */
+    /** @var \Zain\LaravelDoctrine\Algolia\Services\AlgoliaSearchService */
     protected $searchService;
 
     public function setUp()

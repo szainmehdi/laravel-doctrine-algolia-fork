@@ -1,18 +1,18 @@
 <?php
 
-namespace Algolia\SearchBundle\TestCase;
+namespace Zain\LaravelDoctrine\Algolia\TestCase;
 
-use Algolia\SearchBundle\BaseTest;
-use Algolia\SearchBundle\TestApp\Entity\Comment;
-use Algolia\SearchBundle\TestApp\Entity\ContentAggregator;
-use Algolia\SearchBundle\TestApp\Entity\Image;
-use Algolia\SearchBundle\TestApp\Entity\Link;
-use Algolia\SearchBundle\TestApp\Entity\Post;
-use Algolia\SearchBundle\TestApp\Entity\Tag;
+use Zain\LaravelDoctrine\Algolia\BaseTest;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\Comment;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\ContentAggregator;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\Image;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\Link;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\Post;
+use Zain\LaravelDoctrine\Algolia\TestApp\Entity\Tag;
 
 class SearchServiceTest extends BaseTest
 {
-    /** @var \Algolia\SearchBundle\Services\AlgoliaSearchService */
+    /** @var \Zain\LaravelDoctrine\Algolia\Services\AlgoliaSearchService */
     protected $searchService;
     protected $entityManager;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Algolia\SearchBundle\Settings;
+namespace Zain\LaravelDoctrine\Algolia\Settings;
 
 use Algolia\AlgoliaSearch\SearchClient;
 use Symfony\Component\Filesystem\Filesystem;
