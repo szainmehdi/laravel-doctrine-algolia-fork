@@ -5,9 +5,7 @@ namespace Zain\LaravelDoctrine\Algolia\Command;
 use Algolia\AlgoliaSearch\SearchClient;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
 use Zain\LaravelDoctrine\Algolia\Entity\Aggregator;
 use Zain\LaravelDoctrine\Algolia\SearchService;
 
@@ -16,66 +14,28 @@ use Zain\LaravelDoctrine\Algolia\SearchService;
  */
 final class SearchImportCommand extends IndexCommand
 {
-    /**
-     * @var string
-     */
-    protected static $defaultName = 'search:import';
+    protected $name = 'search:import';
+    protected $description = 'Import given entity into search engine';
 
-    /**
-     * @var SearchService
-     */
-    private $searchServiceForAtomicReindex;
+    private SearchService $searchServiceForAtomicReindex;
+    private ManagerRegistry $managerRegistry;
+    private SearchClient $searchClient;
 
-    /**
-     * @var ManagerRegistry|null
-     */
-    private $managerRegistry;
-
-    /**
-     * @var SearchClient
-     */
-    private $searchClient;
-
-    public function __construct(
+    public function handle(
         SearchService $searchService,
         SearchService $searchServiceForAtomicReindex,
         ManagerRegistry $managerRegistry,
         SearchClient $searchClient
     ) {
-        parent::__construct($searchService);
-
+        $this->searchService = $searchService;
         $this->searchServiceForAtomicReindex = $searchServiceForAtomicReindex;
-        $this->managerRegistry               = $managerRegistry;
-        $this->searchClient                  = $searchClient;
-    }
+        $this->managerRegistry = $managerRegistry;
+        $this->searchClient = $searchClient;
 
-    /**
-     * @return void
-     */
-    protected function configure()
-    {
-        $this
-            ->setDescription('Import given entity into search engine')
-            ->addOption('indices', 'i', InputOption::VALUE_OPTIONAL, 'Comma-separated list of index names')
-            ->addOption('atomic', null, InputOption::VALUE_NONE, <<<EOT
-If set, command replaces all records in an index without any downtime. It pushes a new set of objects and removes all previous ones.
-
-Internally, this option causes command to copy existing index settings, synonyms and query rules and indexes all objects. Finally, the existing index is replaced by the temporary one.
-EOT
-            )
-            ->addArgument(
-                'extra',
-                InputArgument::IS_ARRAY | InputArgument::OPTIONAL,
-                'Check your engine documentation for available options'
-            );
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $shouldDoAtomicReindex = $input->getOption('atomic');
-        $entitiesToIndex       = $this->getEntitiesFromArgs($input, $output);
-        $config                = $this->searchService->getConfiguration();
-        $indexingService       = ($shouldDoAtomicReindex ? $this->searchServiceForAtomicReindex : $this->searchService);
+        $shouldDoAtomicReindex = $this->option('atomic');
+        $entitiesToIndex = $this->getEntities();
+        $config = $this->searchService->getConfiguration();
+        $indexingService = ($shouldDoAtomicReindex ? $this->searchServiceForAtomicReindex : $this->searchService);
 
         foreach ($entitiesToIndex as $key => $entityClassName) {
             if (is_subclass_of($entityClassName, Aggregator::class)) {
@@ -91,14 +51,18 @@ EOT
                 continue;
             }
 
-            $manager         = $this->managerRegistry->getManagerForClass($entityClassName);
-            $repository      = $manager->getRepository($entityClassName);
+            $manager = $this->managerRegistry->getManagerForClass($entityClassName);
+            $repository = $manager->getRepository($entityClassName);
             $sourceIndexName = $this->searchService->searchableAs($entityClassName);
 
             if ($shouldDoAtomicReindex) {
                 $temporaryIndexName = $this->searchServiceForAtomicReindex->searchableAs($entityClassName);
-                $output->writeln("Creating temporary index <info>$temporaryIndexName</info>");
-                $this->searchClient->copyIndex($sourceIndexName, $temporaryIndexName, ['scope' => ['settings', 'synonyms', 'rules']]);
+                $this->output->writeln("Creating temporary index <info>$temporaryIndexName</info>");
+                $this->searchClient->copyIndex(
+                    $sourceIndexName,
+                    $temporaryIndexName,
+                    ['scope' => ['settings', 'synonyms', 'rules']]
+                );
             }
 
             $page = 0;
@@ -109,18 +73,19 @@ EOT
                     $config['batchSize'],
                     $config['batchSize'] * $page
                 );
-
                 $responses = $this->formatIndexingResponse(
                     $indexingService->index($manager, $entities)
                 );
                 foreach ($responses as $indexName => $numberOfRecords) {
-                    $output->writeln(sprintf(
-                        'Indexed <comment>%s / %s</comment> %s entities into %s index',
-                        $numberOfRecords,
-                        count($entities),
-                        $entityClassName,
-                        '<info>' . $indexName . '</info>'
-                    ));
+                    $this->output->writeln(
+                        sprintf(
+                            'Indexed <comment>%s / %s</comment> %s entities into %s index',
+                            $numberOfRecords,
+                            count($entities),
+                            $entityClassName,
+                            '<info>' . $indexName . '</info>'
+                        )
+                    );
                 }
 
                 $page++;
@@ -128,14 +93,14 @@ EOT
             } while (count($entities) >= $config['batchSize']);
 
             if ($shouldDoAtomicReindex && isset($indexName)) {
-                $output->writeln("Moving <info>$indexName</info> -> <comment>$sourceIndexName</comment>\n");
+                $this->output->writeln("Moving <info>$indexName</info> -> <comment>$sourceIndexName</comment>\n");
                 $this->searchClient->moveIndex($indexName, $sourceIndexName);
             }
 
             $repository->clear();
         }
 
-        $output->writeln('<info>Done!</info>');
+        $this->output->writeln('<info>Done!</info>');
 
         return 0;
     }
@@ -160,5 +125,33 @@ EOT
         }
 
         return $formattedResponse;
+    }
+
+    protected function getOptions()
+    {
+        return [
+            new InputOption('indices', 'i', InputOption::VALUE_OPTIONAL, 'Comma-separated list of index names'),
+            new InputOption(
+                'atomic',
+                null,
+                InputOption::VALUE_NONE,
+                <<<EOT
+If set, command replaces all records in an index without any downtime. It pushes a new set of objects and removes all previous ones.
+
+Internally, this option causes command to copy existing index settings, synonyms and query rules and indexes all objects. Finally, the existing index is replaced by the temporary one.
+EOT
+            ),
+        ];
+    }
+
+    protected function getArguments()
+    {
+        return [
+            new InputArgument(
+                'extra',
+                InputArgument::IS_ARRAY | InputArgument::OPTIONAL,
+                'Check your engine documentation for available options'
+            ),
+        ];
     }
 }

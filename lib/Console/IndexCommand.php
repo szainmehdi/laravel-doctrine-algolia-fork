@@ -2,7 +2,7 @@
 
 namespace Zain\LaravelDoctrine\Algolia\Command;
 
-use Symfony\Component\Console\Command\Command;
+use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Zain\LaravelDoctrine\Algolia\SearchService;
@@ -12,27 +12,17 @@ use Zain\LaravelDoctrine\Algolia\SearchService;
  */
 abstract class IndexCommand extends Command
 {
-    /**
-     * @var SearchService
-     */
-    protected $searchService;
-
-    public function __construct(SearchService $searchService)
-    {
-        $this->searchService = $searchService;
-
-        parent::__construct();
-    }
+    protected SearchService $searchService;
 
     /**
      * @return array<string, string>
      */
-    protected function getEntitiesFromArgs(InputInterface $input, OutputInterface $output)
+    protected function getEntities()
     {
-        $entities   = [];
+        $entities = [];
         $indexNames = [];
 
-        if ($indexList = $input->getOption('indices')) {
+        if ($indexList = $this->option('indices')) {
             $indexNames = explode(',', $indexList);
         }
 
@@ -46,7 +36,9 @@ abstract class IndexCommand extends Command
             if (isset($config['indices'][$name])) {
                 $entities[$name] = $config['indices'][$name]['class'];
             } else {
-                $output->writeln('<comment>No index named <info>' . $name . '</info> was found. Check you configuration.</comment>');
+                $this->output->writeln(
+                    '<comment>No index named <info>' . $name . '</info> was found. Check you configuration.</comment>'
+                );
             }
         }
 

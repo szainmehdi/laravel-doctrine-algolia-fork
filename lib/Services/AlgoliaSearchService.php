@@ -6,11 +6,12 @@ use Algolia\AlgoliaSearch\RequestOptions\RequestOptions;
 use Algolia\AlgoliaSearch\Response\AbstractResponse as Response;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Util\ClassUtils;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Zain\LaravelDoctrine\Algolia\Engine;
 use Zain\LaravelDoctrine\Algolia\Entity\Aggregator;
+use Zain\LaravelDoctrine\Algolia\Exception\ConfigurationException;
 use Zain\LaravelDoctrine\Algolia\Responses\SearchServiceResponse;
 use Zain\LaravelDoctrine\Algolia\SearchableEntity;
 use Zain\LaravelDoctrine\Algolia\SearchService;
@@ -36,22 +37,20 @@ final class AlgoliaSearchService implements SearchService
     /** @var array<string, string> */
     private array $classToIndexMapping;
 
+    /** @var array<string, string> */
+    private array $normalizerMapping;
+
     /** @var array<string, boolean> */
     private array $classToSerializerGroupMapping;
 
     /** @var array<string, string|null> */
     private array $indexIfMapping;
 
-    /** @var mixed */
-    private $normalizer;
-
     /**
-     * @param mixed $normalizer
      * @param array<string, array|int|string> $configuration
      */
-    public function __construct($normalizer, Engine $engine, array $configuration)
+    public function __construct(Engine $engine, array $configuration)
     {
-        $this->normalizer = $normalizer;
         $this->engine = $engine;
         $this->configuration = $configuration;
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
@@ -61,6 +60,7 @@ final class AlgoliaSearchService implements SearchService
         $this->setClassToIndexMapping();
         $this->setClassToSerializerGroupMapping();
         $this->setIndexIfMapping();
+        $this->setNormalizerMapping();
     }
 
     private function setSearchableEntities(): void
@@ -103,6 +103,16 @@ final class AlgoliaSearchService implements SearchService
         }
 
         $this->classToIndexMapping = $mapping;
+    }
+
+    private function setNormalizerMapping(): void
+    {
+        $mapping = [];
+        foreach ($this->configuration['indices'] as $indexName => $indexDetails) {
+            $mapping[$indexDetails['class']] = app()->make($indexDetails['normalizer']);
+        }
+
+        $this->normalizerMapping = $mapping;
     }
 
     private function setClassToSerializerGroupMapping(): void
@@ -158,7 +168,6 @@ final class AlgoliaSearchService implements SearchService
                 return $this->isSearchable($entity);
             }
         );
-
 
         $searchablesToBeRemoved = [];
         foreach ($searchablesToBeIndexed as $key => $entity) {
@@ -278,7 +287,7 @@ final class AlgoliaSearchService implements SearchService
                     $this->searchableAs($entityClassName),
                     $entity,
                     $objectManager->getClassMetadata($entityClassName),
-                    $this->normalizer,
+                    $this->getNormalizer($entityClassName),
                     ['useSerializerGroup' => $this->canUseSerializerGroup($entityClassName)]
                 );
             }
@@ -304,6 +313,11 @@ final class AlgoliaSearchService implements SearchService
         return $this->classToSerializerGroupMapping[$className];
     }
 
+    private function getNormalizer(string $className): NormalizerInterface
+    {
+        return $this->normalizerMapping[$className];
+    }
+
     /**
      * @param array<string, int|string|array>|RequestOptions $requestOptions
      */
@@ -317,7 +331,7 @@ final class AlgoliaSearchService implements SearchService
     private function assertIsSearchable(string $className): void
     {
         if (!$this->isSearchable($className)) {
-            throw new Exception('Class ' . $className . ' is not searchable.');
+            throw new ConfigurationException('Class ' . $className . ' is not searchable.');
         }
     }
 

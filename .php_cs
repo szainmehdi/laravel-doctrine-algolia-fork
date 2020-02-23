@@ -2,7 +2,7 @@
 
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__ . DIRECTORY_SEPARATOR . 'tests')
-    ->in(__DIR__ . DIRECTORY_SEPARATOR . 'src')
+    ->in(__DIR__ . DIRECTORY_SEPARATOR . 'lib')
     ->append(['.php_cs.dist']);
 
 $rules = [
