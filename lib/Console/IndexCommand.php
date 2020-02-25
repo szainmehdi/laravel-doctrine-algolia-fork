@@ -1,6 +1,6 @@
 <?php
 
-namespace Zain\LaravelDoctrine\Algolia\Command;
+namespace Zain\LaravelDoctrine\Algolia\Console;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputInterface;

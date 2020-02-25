@@ -9,6 +9,6 @@ clover.xml
 symfony/tests/QualityTools/vendor/
 symfony/tests/QualityTools/.idea/
 symfony/tests/QualityTools/composer.lock
-phpunit.xml
 phpunit.xml.sym
+phpunit.xml
 .phpunit.result.cache

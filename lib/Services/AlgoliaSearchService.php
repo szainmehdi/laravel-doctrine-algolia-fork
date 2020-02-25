@@ -8,15 +8,16 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Util\ClassUtils;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Zain\LaravelDoctrine\Algolia\AtomicSearchService;
 use Zain\LaravelDoctrine\Algolia\Engine;
 use Zain\LaravelDoctrine\Algolia\Entity\Aggregator;
 use Zain\LaravelDoctrine\Algolia\Exception\ConfigurationException;
 use Zain\LaravelDoctrine\Algolia\Responses\SearchServiceResponse;
 use Zain\LaravelDoctrine\Algolia\SearchableEntity;
 use Zain\LaravelDoctrine\Algolia\SearchService;
+use Zain\LaravelDoctrine\Algolia\Serialization\SerializerFactory;
 
-final class AlgoliaSearchService implements SearchService
+final class AlgoliaSearchService implements SearchService, AtomicSearchService
 {
     private Engine $engine;
 
@@ -46,21 +47,23 @@ final class AlgoliaSearchService implements SearchService
     /** @var array<string, string|null> */
     private array $indexIfMapping;
 
+    private SerializerFactory $serializerFactory;
+
     /**
      * @param array<string, array|int|string> $configuration
      */
-    public function __construct(Engine $engine, array $configuration)
+    public function __construct(SerializerFactory $serializerFactory, Engine $engine, array $configuration)
     {
         $this->engine = $engine;
         $this->configuration = $configuration;
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
+        $this->serializerFactory = $serializerFactory;
 
         $this->setSearchableEntities();
         $this->setAggregatorsAndEntitiesAggregators();
         $this->setClassToIndexMapping();
         $this->setClassToSerializerGroupMapping();
         $this->setIndexIfMapping();
-        $this->setNormalizerMapping();
     }
 
     private function setSearchableEntities(): void
@@ -103,16 +106,6 @@ final class AlgoliaSearchService implements SearchService
         }
 
         $this->classToIndexMapping = $mapping;
-    }
-
-    private function setNormalizerMapping(): void
-    {
-        $mapping = [];
-        foreach ($this->configuration['indices'] as $indexName => $indexDetails) {
-            $mapping[$indexDetails['class']] = app()->make($indexDetails['normalizer']);
-        }
-
-        $this->normalizerMapping = $mapping;
     }
 
     private function setClassToSerializerGroupMapping(): void
@@ -287,7 +280,7 @@ final class AlgoliaSearchService implements SearchService
                     $this->searchableAs($entityClassName),
                     $entity,
                     $objectManager->getClassMetadata($entityClassName),
-                    $this->getNormalizer($entityClassName),
+                    $this->serializerFactory,
                     ['useSerializerGroup' => $this->canUseSerializerGroup($entityClassName)]
                 );
             }
@@ -311,11 +304,6 @@ final class AlgoliaSearchService implements SearchService
     private function canUseSerializerGroup(string $className): bool
     {
         return $this->classToSerializerGroupMapping[$className];
-    }
-
-    private function getNormalizer(string $className): NormalizerInterface
-    {
-        return $this->normalizerMapping[$className];
     }
 
     /**

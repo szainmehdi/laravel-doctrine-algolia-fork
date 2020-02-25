@@ -1,11 +1,12 @@
 <?php
 
-namespace Zain\LaravelDoctrine\Algolia\Command;
+namespace Zain\LaravelDoctrine\Algolia\Console;
 
 use Algolia\AlgoliaSearch\SearchClient;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
+use Zain\LaravelDoctrine\Algolia\AtomicSearchService;
 use Zain\LaravelDoctrine\Algolia\Entity\Aggregator;
 use Zain\LaravelDoctrine\Algolia\SearchService;
 
@@ -17,25 +18,25 @@ final class SearchImportCommand extends IndexCommand
     protected $name = 'search:import';
     protected $description = 'Import given entity into search engine';
 
-    private SearchService $searchServiceForAtomicReindex;
+    private AtomicSearchService $atomicSearchService;
     private ManagerRegistry $managerRegistry;
     private SearchClient $searchClient;
 
     public function handle(
         SearchService $searchService,
-        SearchService $searchServiceForAtomicReindex,
+        AtomicSearchService $atomicSearchService,
         ManagerRegistry $managerRegistry,
         SearchClient $searchClient
     ) {
         $this->searchService = $searchService;
-        $this->searchServiceForAtomicReindex = $searchServiceForAtomicReindex;
+        $this->atomicSearchService = $atomicSearchService;
         $this->managerRegistry = $managerRegistry;
         $this->searchClient = $searchClient;
 
         $shouldDoAtomicReindex = $this->option('atomic');
         $entitiesToIndex = $this->getEntities();
         $config = $this->searchService->getConfiguration();
-        $indexingService = ($shouldDoAtomicReindex ? $this->searchServiceForAtomicReindex : $this->searchService);
+        $indexingService = ($shouldDoAtomicReindex ? $this->atomicSearchService : $this->searchService);
 
         foreach ($entitiesToIndex as $key => $entityClassName) {
             if (is_subclass_of($entityClassName, Aggregator::class)) {
@@ -56,7 +57,7 @@ final class SearchImportCommand extends IndexCommand
             $sourceIndexName = $this->searchService->searchableAs($entityClassName);
 
             if ($shouldDoAtomicReindex) {
-                $temporaryIndexName = $this->searchServiceForAtomicReindex->searchableAs($entityClassName);
+                $temporaryIndexName = $this->atomicSearchService->searchableAs($entityClassName);
                 $this->output->writeln("Creating temporary index <info>$temporaryIndexName</info>");
                 $this->searchClient->copyIndex(
                     $sourceIndexName,

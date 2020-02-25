@@ -37,6 +37,6 @@ final class SearchSettingsPushCommand extends SearchSettingsCommand
      */
     protected function handle($params)
     {
-        return $this->settingsManager->push($params);
+        return $this->manager->push($params);
     }
 }

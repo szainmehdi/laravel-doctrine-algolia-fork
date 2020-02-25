@@ -6,13 +6,14 @@ use Algolia\AlgoliaSearch\RequestOptions\RequestOptions;
 use Algolia\AlgoliaSearch\Response\AbstractResponse as Response;
 use Algolia\AlgoliaSearch\Response\NullResponse;
 use Doctrine\Common\Persistence\ObjectManager;
+use Zain\LaravelDoctrine\Algolia\AtomicSearchService;
 use Zain\LaravelDoctrine\Algolia\SearchService;
 
 /**
  * This class aims to be used in dev or testing environments. It may
  * be subject to breaking changes.
  */
-class NullSearchService implements SearchService
+class NullSearchService implements SearchService, AtomicSearchService
 {
     /**
      * @param string $className
